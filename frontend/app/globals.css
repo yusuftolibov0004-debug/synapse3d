@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* ==========================================================
+   Synapse 3D — Global dizayn tizimi
+   Cyberpunk / futuristik kosmik-kema kabinasiga xos uslub.
+   ========================================================== */
+
+:root {
+  /* --- Fon ranglari (to'q ko'k-qora) --- */
+  --color-bg-primary: #05070d;
+  --color-bg-secondary: #0a0e1a;
+  --color-bg-panel: #0f1420;
+
+  /* --- Neon akcent ranglari --- */
+  --color-neon-green: #00ff9c;
+  --color-neon-orange: #ff8a00;
+  --color-neon-red: #ff2d55;
+  --color-neon-blue: #00d4ff;
+
+  /* --- Matn ranglari --- */
+  --color-text-primary: #e6f1ff;
+  --color-text-secondary: #7a8ba8;
+
+  /* --- Chegara / border --- */
+  --color-border: #1c2438;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- Scrollbar'ni ham cyberpunk uslubiga moslash --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-blue);
+}
+
+/* --- Yordamchi klass: neon-glow effekti --- */
+.neon-glow-green {
+  box-shadow: 0 0 12px rgba(0, 255, 156, 0.5);
+}
+
+.neon-glow-orange {
+  box-shadow: 0 0 12px rgba(255, 138, 0, 0.5);
+}
+
+.neon-glow-red {
+  box-shadow: 0 0 12px rgba(255, 45, 85, 0.5);
+}
+
+.neon-glow-blue {
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+}
+
+/* --- Panel (kartochka) uslubi --- */
+.panel {
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
