@@ -2,6 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Hub from "./Hub";
 import StarField from "./StarField";
 import FinanceBuilding from "./FinanceBuilding";
@@ -10,7 +11,9 @@ import ServerNode from "./ServerNode";
 /**
  * components/scene/Scene.tsx
  *
- * 3D Command Deck'ning asosiy sahnasi.
+ * 3D Command Deck'ning asosiy sahnasi. Bloom postprocessing effekti
+ * barcha emissive (yorug'lik chiqaruvchi) materiallarni "neon" qilib
+ * porlatadi.
  */
 export default function Scene() {
   return (
@@ -45,6 +48,16 @@ export default function Scene() {
           autoRotate
           autoRotateSpeed={0.5}
         />
+
+        {/* Postprocessing — neon Bloom effekti */}
+        <EffectComposer>
+          <Bloom
+            intensity={1.2}
+            luminanceThreshold={0.15}
+            luminanceSmoothing={0.4}
+            mipmapBlur
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   );
