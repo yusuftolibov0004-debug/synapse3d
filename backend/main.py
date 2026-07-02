@@ -8,6 +8,8 @@ Bu yerda FastAPI ilovasi yaratiladi va barcha routerlar ulanadi.
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers import health
+
 app = FastAPI(
     title="Synapse 3D API",
     description="Kompaniyaning 3D raqamli egizagi uchun backend API",
@@ -24,6 +26,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Routerlarni ulash
+app.include_router(health.router)
 
 
 @app.get("/")
