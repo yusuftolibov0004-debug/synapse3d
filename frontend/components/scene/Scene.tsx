@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import Hub from "./Hub";
 import StarField from "./StarField";
 import FinanceBuilding from "./FinanceBuilding";
+import ServerNode from "./ServerNode";
 
 /**
  * components/scene/Scene.tsx
@@ -14,10 +15,10 @@ import FinanceBuilding from "./FinanceBuilding";
 export default function Scene() {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [5, 3, 5], fov: 50 }}>
+      <Canvas camera={{ position: [6, 4, 6], fov: 50 }}>
         {/* Fon rangi va uzoqlik tumani — chuqurlik hissi uchun */}
         <color attach="background" args={["#05070d"]} />
-        <fog attach="fog" args={["#05070d", 8, 20]} />
+        <fog attach="fog" args={["#05070d", 8, 22]} />
 
         {/* Yoritish */}
         <ambientLight intensity={0.4} />
@@ -30,14 +31,17 @@ export default function Scene() {
         {/* Markaziy obyekt */}
         <Hub />
 
-        {/* Moliya binosi — hozircha "healthy" holatda, qo'lda */}
+        {/* Moliya binosi */}
         <FinanceBuilding status="healthy" position={[-2.5, 0, 0]} />
+
+        {/* Server tuguni — hozircha 60% yuklama, qo'lda */}
+        <ServerNode load={0.6} position={[2.5, 0, 0]} />
 
         {/* Kamera boshqaruvi */}
         <OrbitControls
           enablePan={false}
           minDistance={3}
-          maxDistance={14}
+          maxDistance={16}
           autoRotate
           autoRotateSpeed={0.5}
         />
