@@ -2,8 +2,9 @@
  * src/server.ts
  *
  * Synapse 3D uchun real-time WebSocket server. Bu server FastAPI
- * backend'dan signal qabul qiladi (keyingi bosqichda) va barcha
- * ulangan frontend klientlarga (3D sahnaga) real vaqtda uzatadi.
+ * backend'dan HTTP orqali signal qabul qiladi (POST /broadcast) va
+ * barcha ulangan frontend klientlarga (3D sahnaga) WebSocket orqali
+ * real vaqtda uzatadi.
  */
 
 import express from "express";
@@ -35,7 +36,6 @@ wss.on("connection", (ws) => {
   clients.add(ws);
   console.log(`[WS] Yangi klient ulandi. Jami klientlar: ${clients.size}`);
 
-  // Klientga xush kelibsiz xabari
   ws.send(JSON.stringify({ type: "welcome", message: "Synapse3D realtime serverga ulandingiz" }));
 
   ws.on("close", () => {
@@ -46,6 +46,42 @@ wss.on("connection", (ws) => {
   ws.on("error", (err) => {
     console.error("[WS] Xatolik:", err);
   });
+});
+
+/**
+ * Barcha ulangan WebSocket klientlarga xabar yuboradi.
+ */
+function broadcast(payload: unknown) {
+  const message = JSON.stringify(payload);
+  let sentCount = 0;
+  for (const client of clients) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+      sentCount++;
+    }
+  }
+  return sentCount;
+}
+
+/**
+ * POST /broadcast
+ *
+ * FastAPI backend shu endpointga so'rov yuborib, barcha ulangan
+ * frontend klientlarga (3D sahnaga) real vaqtda ma'lumot uzatadi.
+ *
+ * Kutilayotgan body: { "type": "finance_update", "payload": {...} }
+ */
+app.post("/broadcast", (req, res) => {
+  const { type, payload } = req.body;
+
+  if (!type) {
+    return res.status(400).json({ error: "'type' maydoni majburiy" });
+  }
+
+  const sentCount = broadcast({ type, payload });
+  console.log(`[Broadcast] type=${type} -> ${sentCount} klientga yuborildi`);
+
+  res.json({ status: "ok", sentTo: sentCount });
 });
 
 httpServer.listen(PORT, () => {
