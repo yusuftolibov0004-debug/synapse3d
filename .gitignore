@@ -1,0 +1,29 @@
+# --- Python / Backend ---
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# --- Node.js / Frontend ---
+node_modules/
+.next/
+out/
+dist/
+
+# --- Muhit o'zgaruvchilari (hech qachon commit qilinmaydi!) ---
+.env
+.env.local
+.env.*.local
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Build / cache ---
+*.log
+.cache/
+coverage/
